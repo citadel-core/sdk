@@ -20,10 +20,10 @@ await build({
     license: "MIT",
     repository: {
       type: "git",
-      url: "git+https://github.com/runcitadel/sdk-v2.git",
+      url: "git+https://github.com/citadel-core/sdk.git",
     },
     bugs: {
-      url: "https://github.com/runcitadel/sdk-v2/issues",
+      url: "https://github.com/citadel-core/sdk/issues",
     },
   },
 });
