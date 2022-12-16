@@ -1,6 +1,20 @@
 import { ApiConnection } from "../common/connection.ts";
 import { joinUrl } from "../common/utils.ts";
-import type { app } from "../common/types.ts";
+import type { app, RangeOf2 } from "../common/types.ts";
+
+export type appUpdateStatus = {
+  state: "installing" | "success" | "failed";
+  progress: RangeOf2<0, 100>;
+  currentStep: {
+    state: "stopping" | "starting";
+    app: string;
+  } | {
+    store: string;
+    state: "downloading";
+  } | {
+    state: "processing";
+  };
+};
 
 export class ManagerApps extends ApiConnection {
   constructor(baseUrl: string) {
@@ -104,5 +118,10 @@ export class ManagerApps extends ApiConnection {
       branch: string;
       subdir: string;
     }>("/stores");
+  }
+
+
+  updateStatus() {
+    return this.get<appUpdateStatus>('update-status');
   }
 }

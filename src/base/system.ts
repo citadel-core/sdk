@@ -43,8 +43,8 @@ export class ManagerSystem extends ApiConnection {
     await this.post('quick-update');
   }
 
-  async updateStatus(): Promise<updateStatus> {
-    return await this.get<updateStatus>('update-status');
+  updateStatus() {
+    return this.get<updateStatus>('update-status');
   }
 
   async backupStatus(): Promise<backupStatus> {
