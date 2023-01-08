@@ -123,31 +123,4 @@ export class ManagerApps extends ApiConnection {
   updateStatus() {
     return this.get<appUpdateStatus>("update-status");
   }
-
-  /**
-   * Enable Let's encrypt. This also accepts the Let's encrypt terms of service.
-   *
-   * @param email The user's email address
-   */
-  enableLetsEncrypt(email: string) {
-    return this.post<void>("enable-letsencrypt", {
-      email,
-      acceptedTos: true,
-    });
-  }
-
-  letsEncryptStatus() {
-    return this.get<{
-      email?: string;
-      agreed_lets_encrypt_tos?: boolean;
-      app_domains?: Record<string, string>;
-    }>("letsencrypt");
-  }
-
-  addDomain(app: string, domain: string) {
-    return this.post<void>("add-domain", {
-      app,
-      domain,
-    });
-  }
 }

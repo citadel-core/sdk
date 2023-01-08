@@ -200,4 +200,44 @@ export class ManagerAuth extends ApiConnection {
   public async isTotpEnabled(): Promise<boolean> {
     return (await this.get<{totpEnabled: boolean}>('totp/status')).totpEnabled;
   }
+
+  runningCitadelStatus() {
+    return this.get<{
+      isSetup: boolean;
+      username: string;
+      password: string;
+      subdomain: string;
+    }>("runningcitadel");
+  }
+
+  /**
+   * Enable Let's encrypt. This also accepts the Let's encrypt terms of service.
+   *
+   * @param email The user's email address
+   */
+  enableLetsEncrypt(email: string) {
+    return this.post<void>("enable-letsencrypt", {
+      email,
+      acceptedTos: true,
+    });
+  }
+
+  letsEncryptStatus() {
+    return this.get<{
+      email?: string;
+      agreed_lets_encrypt_tos?: boolean;
+      app_domains?: Record<string, string>;
+    }>("letsencrypt");
+  }
+
+  addDomain(app: string, domain: string) {
+    return this.post<void>("add-domain", {
+      app,
+      domain,
+    });
+  }
+
+  ipAddr() {
+    return this.get<string>("ip-addr");
+  }
 }
