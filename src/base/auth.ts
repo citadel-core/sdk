@@ -216,7 +216,7 @@ export class ManagerAuth extends ApiConnection {
    * @param email The user's email address
    */
   enableLetsEncrypt(email: string) {
-    return this.post<void>("enable-letsencrypt", {
+    return this.post<void>("letsencrypt", {
       email,
       acceptedTos: true,
     });
@@ -231,9 +231,15 @@ export class ManagerAuth extends ApiConnection {
   }
 
   addDomain(app: string, domain: string) {
-    return this.post<void>("add-domain", {
+    return this.post<void>("domain", {
       app,
       domain,
+    });
+  }
+
+  removeDomain(app: string) {
+    return this.delete<void>("domain", {
+      app,
     });
   }
 
