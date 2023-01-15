@@ -28,6 +28,11 @@ export class ManagerSystem extends ApiConnection {
     return (await this.get<{url: string}>('dashboard-hidden-service')).url;
   }
 
+  async domain(): Promise<string | undefined> {
+    return (await this.get<{url: string | undefined}>('dashboard-domain')).url;
+  }
+
+
   async getUpdate(): Promise<false | versionFile> {
     const data = await this.get<{update: versionFile | string}>(
       'get-update-details',
