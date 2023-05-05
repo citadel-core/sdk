@@ -237,9 +237,10 @@ export class ManagerAuth extends ApiConnection {
     });
   }
 
-  removeDomain(app: string) {
+  removeDomain(app: string, domain?: string) {
     return this.delete<void>("domain", {
       app,
+      domain,
     });
   }
 
