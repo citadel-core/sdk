@@ -6,7 +6,7 @@ import {LNDLightning} from './lnd/lightning.ts';
 import {LNDWallet} from './lnd/wallet.ts';
 import {joinUrl} from '../common/utils.ts';
 import {LNDTransaction} from './lnd/transaction.ts';
-import {RequestFunction} from '../common/types.ts';
+import {RequestFunction, LndConnectionDetails} from '../common/types.ts';
 
 export class MiddlewareLND extends ApiConnection {
   readonly channel: LNDChannel;
@@ -76,5 +76,9 @@ export class MiddlewareLND extends ApiConnection {
       pubkey: string;
       valid: boolean;
     }>('util/verify-message', {message, signature});
+  }
+  
+  getLndConnectUrls() {
+    return this.get<LndConnectionDetails>('lndconnect');
   }
 }

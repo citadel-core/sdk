@@ -7,7 +7,6 @@ import type {
   memUsage,
   updateStatus,
   versionFile,
-  LndConnectionDetails,
 } from '../common/types.ts';
 
 export class ManagerSystem extends ApiConnection {
@@ -107,11 +106,6 @@ export class ManagerSystem extends ApiConnection {
     return (
       (await this.get<{os: 'Citadel OS' | 'unknown'}>('/')).os === 'Citadel OS'
     );
-  }
-  
-  
-  getLndConnectUrls() {
-    return this.get<LndConnectionDetails>('lndconnect-urls');
   }
 
   async i2pCredentials() {
