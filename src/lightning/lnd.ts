@@ -79,6 +79,6 @@ export class MiddlewareLND extends ApiConnection {
   }
   
   getLndConnectUrls() {
-    return this.get<LndConnectionDetails>('lndconnect');
+    return this.get<LndConnectionDetails>('lndconnect/');
   }
 }
