@@ -134,4 +134,8 @@ export class ManagerBitcoin extends ApiConnection {
   chainHeight() {
     return this.get<number>('/max-header');
   }
+  
+  setImpl(impl: "knots" | "core"): Promise<void> {
+    return this.post('set-impl', impl);
+  }
 }
