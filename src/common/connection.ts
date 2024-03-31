@@ -1,5 +1,6 @@
 import {joinUrl} from './utils.ts';
 import {RequestFunction} from './types.ts';
+import type { Ref } from "npm:vue";
 
 export abstract class ApiConnection {
   private readonly _baseUrl: string;
@@ -7,8 +8,8 @@ export abstract class ApiConnection {
     this._baseUrl = baseUrl;
   }
 
-  protected _jwt = '';
-  public set jwt(jwt: string) {
+  protected _jwt: string | Ref<string> = '';
+  public set jwt(jwt: string | Ref<string>) {
     this._jwt = jwt;
   }
 
@@ -36,16 +37,17 @@ export abstract class ApiConnection {
     blob = false,
   ): Promise<ResponseType> {
     url = joinUrl(this._baseUrl, url);
+    const jwt = typeof this._jwt == "object" ? this._jwt.value : this._jwt;
     if (this._requestFunc) {
       return await this._requestFunc<ResponseType>(
-        this._jwt,
+        jwt,
         url,
         method,
         auth,
       );
     }
     let authHeader = '';
-    if (this._jwt) authHeader = `JWT ${this._jwt}`;
+    if (jwt) authHeader = `JWT ${jwt}`;
     let headers: Record<string, string> = {};
     if (method !== 'GET') {
       headers = {

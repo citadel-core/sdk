@@ -7,6 +7,7 @@ import {LNDWallet} from './lnd/wallet.ts';
 import {joinUrl} from '../common/utils.ts';
 import {LNDTransaction} from './lnd/transaction.ts';
 import {RequestFunction, LndConnectionDetails} from '../common/types.ts';
+import type { Ref } from 'npm:vue';
 
 export class MiddlewareLND extends ApiConnection {
   readonly channel: LNDChannel;
@@ -24,7 +25,7 @@ export class MiddlewareLND extends ApiConnection {
     this.transaction = new LNDTransaction(url);
   }
 
-  public set jwt(newJwt: string) {
+  public set jwt(newJwt: string | Ref<string>) {
     // This is ugly, but makes the final bundle smaller
     this._jwt =
       this.channel.jwt =

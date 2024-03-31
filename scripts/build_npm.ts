@@ -1,4 +1,4 @@
-import { build, emptyDir } from "https://deno.land/x/dnt@0.32.0/mod.ts";
+import { build, emptyDir } from "https://deno.land/x/dnt@0.40.0/mod.ts";
 
 await emptyDir("./npm");
 
@@ -10,7 +10,7 @@ await build({
     deno: "dev",
   },
   compilerOptions: {
-    lib: ["es2021", "dom"],
+    lib: ["ES2022", "DOM"],
   },
   package: {
     // package.json properties
@@ -18,6 +18,9 @@ await build({
     version: Deno.args[0],
     description: "Client for the Citadel API",
     license: "MIT",
+    optionalDependencies: {
+      vue: "^3.0.0",
+    },
     repository: {
       type: "git",
       url: "git+https://github.com/citadel-core/sdk.git",
@@ -31,3 +34,11 @@ await build({
 // post build steps
 Deno.copyFileSync("LICENSE", "npm/LICENSE");
 Deno.copyFileSync("README.md", "npm/README.md");
+
+const packageJsonPath = "./npm/package.json";
+const packageJson = JSON.parse(Deno.readTextFileSync(packageJsonPath));
+delete packageJson.dependencies.vue;
+if (Object.keys(packageJson.dependencies).length === 0) {
+  delete packageJson.dependencies;
+}
+Deno.writeTextFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));

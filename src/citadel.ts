@@ -10,6 +10,7 @@ import { MiddlewareLND } from "./lightning/lnd.ts";
 import { ApiV2 } from "./base/index.ts";
 import { Middleware } from "./lightning/index.ts";
 import { MiddlewarePages } from "./lightning/pages.ts";
+import type { Ref } from "npm:vue";
 
 export default class Citadel {
   readonly auth: ManagerAuth;
@@ -20,7 +21,7 @@ export default class Citadel {
   readonly system: ManagerSystem;
   readonly lightning: MiddlewareLND;
   readonly pages: MiddlewarePages;
-  private _jwt = "";
+  private _jwt: string | Ref<string> = "";
   private _v2Api: ApiV2;
   private _middleware: Middleware;
 
@@ -74,11 +75,7 @@ export default class Citadel {
     };
   }
 
-  public get jwt(): string {
-    return this._jwt;
-  }
-
-  public set jwt(newJwt: string) {
+  public set jwt(newJwt: string | Ref<string>) {
     this.apps.jwt =
       this.auth.jwt =
       this.bitcoin.jwt =
